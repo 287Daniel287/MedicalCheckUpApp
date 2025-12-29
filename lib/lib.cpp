@@ -6,12 +6,13 @@
 #include<thread>
 #include <sstream>
 using namespace std;
+
 static vector<Patient> Pacientes;
 //Modifyng stuff
 void RegistPatient()
 {
     Patient newPatient;
-    cout << "\n Ingrese los nombres y apellidos del paciente: ";
+    cout << "Ingrese los nombres y apellidos del paciente: ";
     cin.ignore();
     getline(cin, newPatient.names);
     for (Patient &p : Pacientes)
@@ -32,10 +33,18 @@ void RegistPatient()
     }
     cout << "Ingrese el numero de historia del paciente: ";
     cin >> newPatient.ID;
+    for (Patient& p : Pacientes)
+    {
+        if (p.ID == newPatient.ID)
+        {
+            cout << "La ID ingresada ya existe, chequee los datos!\n";
+            return RegistPatient();
+        }
+
+    }
     cin.ignore();
     cout << "Motivo de la consulta: ";
     getline(cin, newPatient.Reason);
-    cin.ignore();
     cout << "Prioridad(1-Urgente,2-Normal): ";
     int prior;
     cin >> prior;
@@ -94,22 +103,23 @@ void ModifyData(int NewAge, string NewReason, int RequestedID)
 //Lists
 void PrintPatientWaitList()
 {
-    printf("%s%20s%10s\n", "ID", "Nombre", "Prioridad");
+    printf("%s%30s%10s\n", "ID", "Nombre", "Prioridad");
     for(Patient p : Pacientes)
     {
         if(p.priority == "Urgente" && p.status != "Atendido")
         {
-            printf("%d%20s%10s\n", p.ID, p.names.c_str(), p.priority.c_str());
+            printf("%d%30s%10s\n", p.ID, p.names.c_str(), p.priority.c_str());
         }
     }
     for(Patient p : Pacientes)
     {
         if(p.priority == "Normal" && p.status != "Atendido")
         {
-            printf("%d%20s%10s", p.ID, p.names.c_str(), p.priority.c_str());
+            printf("%d%30s%10s", p.ID, p.names.c_str(), p.priority.c_str());
         }
     }
-    cout << "\n presione espacio para continuar..";
+    cout << "\npresione espacio para continuar..";
+    cin.ignore();
     cin.get();
     this_thread::sleep_for(chrono::milliseconds(300));
     system("cls");
@@ -128,9 +138,35 @@ void PrintStats()
         if (p.priority == "Urgente")urgentes++;
     }
     printf("%d%10d%10d", atendidos, espera, urgentes);
-    cout << "\n presione espacio para continuar..";
+    cout << "\npresione espacio para continuar..";
+    cin.ignore();
     cin.get();
-    this_thread::sleep_for(chrono::milliseconds(300));
+    system("cls");
+}
+
+void SeeReason(int RequestedID)
+{
+    for (Patient& p : Pacientes)
+    {
+        if (p.ID == RequestedID) 
+        {
+            cout <<"Nombre: " << p.names
+                << '\n'
+                << "Edad: " << p.Age
+                << '\n'
+                << "ID: " << p.ID
+                << '\n'
+                << "Motivo: " << p.Reason
+                << '\n'
+                << "Prioridad: " << p.priority
+                << '\n'
+                << "Estado: " << p.status;
+            break;
+        }
+    }
+    cout << "\npresione espacio para continuar..";
+    cin.ignore();
+    cin.get();
     system("cls");
 }
 //Data Storage
@@ -151,6 +187,8 @@ void SaveData()
     }
     archivo.close(); 
     cout << "Datos guardados correctamente.\n";
+    this_thread::sleep_for(chrono::milliseconds(300));
+    system("cls");
 }
 
 void LoadData()
@@ -202,7 +240,7 @@ void GetData()
     archivo.close(); 
     if (tieneDatos) 
     { 
-        cout << "Hay datos guardados. ¿Desea cargarlos (C) o eliminarlos (E)? "; 
+        cout << "Hay datos guardados. Desea cargarlos (C) o eliminarlos (E)? "; 
         char opcion; 
         cin >> opcion; 
         if (opcion == 'C' || opcion == 'c') LoadData();  

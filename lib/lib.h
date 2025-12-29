@@ -1,5 +1,5 @@
 #pragma once
-
+#include <string>
 using namespace std;
 
 struct Patient
@@ -32,3 +32,5 @@ void LoadData();
 void GetData();
 
 void EraseData();
+
+void SeeReason(int RequestedID);
