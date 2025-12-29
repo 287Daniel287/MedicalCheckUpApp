@@ -82,6 +82,7 @@ void AttendedPatient(int RequestedID)
     {
         if (p.ID == RequestedID) p.status = "Atendido";
     }
+    cout << "El paciente con la id " << RequestedID << " fue atendido";
     this_thread::sleep_for(chrono::seconds(2));
     system("cls");
 }
