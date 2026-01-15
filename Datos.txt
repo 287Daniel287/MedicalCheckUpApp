@@ -1,2 +1,2 @@
-21;Daniel Elias;17;Me la mame;Urgente;En Espera
-69;Macklmore mackmaverga;87;Macklemorie un macklemore;Normal;En Espera
+21;Daniel Elias;17; Hipertensión;Urgente;En Espera
+69;Marcos Navarro;20;Glaucoma;Normal;En Espera
