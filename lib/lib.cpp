@@ -5,6 +5,7 @@
 #include<chrono>
 #include<thread>
 #include <sstream>
+#include <conio.h>
 using namespace std;
 
 static vector<Patient> Pacientes;
@@ -50,11 +51,12 @@ void RegistPatient()
     cin >> prior;
     if (prior == 1) newPatient.priority = "Urgente";
     else if (prior == 2) newPatient.priority = "Normal";
-    else { cout << "Ese tipo de urgencia no es válido, chequee los datos!\n"; return RegistPatient(); }
+    else { cout << "Ese tipo de urgencia no es vï¿½lido, chequee los datos!\n"; return RegistPatient(); }
     newPatient.status = "En Espera";
     Pacientes.push_back(newPatient);
     cout << "Paciente Guardado con exito!\n";
-    this_thread::sleep_for(chrono::seconds(2));
+    cout << "\npresione cualquier tecla para continuar..";
+    _getch();
     system("cls");
 }
 
@@ -66,14 +68,14 @@ void DeletePatient(int RequestedID)
         if (it->ID == RequestedID) 
         {
             Pacientes.erase(it); 
-            cout << "Paciente eliminado con éxito!\n";
-            this_thread::sleep_for(chrono::seconds(2));
+            cout << "Paciente eliminado con exito!\n";
+            _getch();
             system("cls");
             return; 
         } 
     } 
-    cout << "No se encontró paciente con ese ID.\n";
-    this_thread::sleep_for(chrono::seconds(2));
+    cout << "No se encontro paciente con ese ID.\n";
+    _getch();
     system("cls");
 }
 void AttendedPatient(int RequestedID)
@@ -83,7 +85,8 @@ void AttendedPatient(int RequestedID)
         if (p.ID == RequestedID) p.status = "Atendido";
     }
     cout << "El paciente con la id " << RequestedID << " fue atendido";
-    this_thread::sleep_for(chrono::seconds(2));
+    cout << "\npresione cualquier tecla para continuar..";
+    _getch();
     system("cls");
 }
 
@@ -98,7 +101,9 @@ void ModifyData(int NewAge, string NewReason, int RequestedID)
             break;
         }
     }
-    this_thread::sleep_for(chrono::seconds(2));
+    cout << "Datos modificados con exito!\n";
+    cout << "\npresione cualquier tecla para continuar..";
+    _getch();
     system("cls");
 }
 //Lists
@@ -119,10 +124,8 @@ void PrintPatientWaitList()
             printf("%d%30s%10s", p.ID, p.names.c_str(), p.priority.c_str());
         }
     }
-    cout << "\npresione espacio para continuar..";
-    cin.ignore();
-    cin.get();
-    this_thread::sleep_for(chrono::milliseconds(300));
+    cout << "\npresione cualquier tecla para continuar..";
+    _getch();
     system("cls");
 }
 
@@ -139,9 +142,8 @@ void PrintStats()
         if (p.priority == "Urgente")urgentes++;
     }
     printf("%d%10d%10d", atendidos, espera, urgentes);
-    cout << "\npresione espacio para continuar..";
-    cin.ignore();
-    cin.get();
+    cout << "\npresione cualquier tecla para continuar..";
+    _getch();
     system("cls");
 }
 
@@ -165,9 +167,8 @@ void SeeReason(int RequestedID)
             break;
         }
     }
-    cout << "\npresione espacio para continuar..";
-    cin.ignore();
-    cin.get();
+    cout << "\npresione cualquier tecla para continuar..";
+    _getch();
     system("cls");
 }
 //Data Storage
@@ -188,7 +189,7 @@ void SaveData()
     }
     archivo.close(); 
     cout << "Datos guardados correctamente.\n";
-    this_thread::sleep_for(chrono::milliseconds(300));
+    _getch();
     system("cls");
 }
 
@@ -220,7 +221,7 @@ void LoadData()
 
     if (!Pacientes.empty()) cout << "Se cargaron " << Pacientes.size() << " pacientes desde archivo.\n"; 
     
-    else cout << "El archivo estaba vacío.\n";
+    else cout << "El archivo estaba vacio.\n";
 }
 void EraseData()
 {
